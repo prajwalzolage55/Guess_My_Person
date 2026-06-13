@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Home — Guess My Person</title>
+  <meta name="description" content="Guess My Person — the ultimate multiplayer party guessing game. Create or join a room and start playing!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0f19'/><text x='50' y='68' font-size='60' font-family='monospace' font-weight='bold' fill='%2338bdf8' text-anchor='middle'>?</text></svg>">
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+  <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound">🔊</button>
+
+  <div class="page-container flex-center flex-col gap-lg">
+
+    <header class="flex-col flex-center gap-sm">
+      <h1 class="title-xl glitch-text" data-text="GUESS MY PERSON">GUESS MY PERSON</h1>
+      <p class="tagline text-center">The ultimate multiplayer guessing game</p>
+    </header>
+
+    <!-- VIEW A — Main Menu -->
+    <div id="menuView" class="section flex-col gap-md">
+      <button id="btnJoinOpen" class="btn btn--primary btn--full">Join Open Room</button>
+      <button id="btnCreateRoom" class="btn btn--secondary btn--full">Create Room</button>
+      <button id="btnJoinCode" class="btn btn--ghost btn--full">Join With Code</button>
+    </div>
+
+    <!-- VIEW B — Join Open Room -->
+    <div id="openRoomView" class="section flex-col gap-md hidden">
+      <button id="btnBackFromOpen" class="btn btn--ghost btn--sm">← Back</button>
+      <h2 class="title-md text-center">Open Rooms</h2>
+      <div class="input-group">
+        <label for="openRoomName">Display Name</label>
+        <input id="openRoomName" class="input-field" type="text" maxlength="16" placeholder="Your display name" autocomplete="off">
+      </div>
+      <div id="openRoomList" class="room-list"></div>
+      <div id="openRoomSpinner" class="flex-center hidden">
+        <div class="loading-spinner"></div>
+      </div>
+      <p id="noRoomsMsg" class="text-muted text-center hidden">No open rooms right now. <a href="#" id="linkCreateFromOpen">Create one?</a></p>
+    </div>
+
+    <!-- VIEW C — Create Room -->
+    <div id="createRoomView" class="section flex-col gap-md hidden">
+      <button id="btnBackFromCreate" class="btn btn--ghost btn--sm">← Back</button>
+      <h2 class="title-md text-center">Create Room</h2>
+      <div class="input-group">
+        <label for="createName">Display Name</label>
+        <input id="createName" class="input-field" type="text" maxlength="16" placeholder="Your display name" autocomplete="off">
+      </div>
+      <div class="input-group">
+        <label for="roomNameInput">Room Name</label>
+        <input id="roomNameInput" class="input-field" type="text" maxlength="24" placeholder="e.g. Friday Night Fun" autocomplete="off">
+      </div>
+      <div class="input-group">
+        <label>Room Type</label>
+        <div class="option-group">
+          <button id="optOpen" class="option-btn option-btn--active" type="button">Open</button>
+          <button id="optPrivate" class="option-btn" type="button">Private</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Rounds</label>
+        <div class="option-group">
+          <button id="optRound1" class="option-btn" type="button">1</button>
+          <button id="optRound2" class="option-btn" type="button">2</button>
+          <button id="optRound3" class="option-btn option-btn--active" type="button">3</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Timer</label>
+        <div class="option-group">
+          <button id="optTimer2" class="option-btn" type="button">2 min</button>
+          <button id="optTimer3" class="option-btn option-btn--active" type="button">3 min</button>
+          <button id="optTimer4" class="option-btn" type="button">4 min</button>
+        </div>
+      </div>
+      <button id="btnCreate" class="btn btn--pink btn--full">Create Room</button>
+    </div>
+
+    <!-- VIEW D — Join With Code -->
+    <div id="joinCodeView" class="section flex-col gap-md hidden">
+      <button id="btnBackFromCode" class="btn btn--ghost btn--sm">← Back</button>
+      <h2 class="title-md text-center">Join With Code</h2>
+      <div class="input-group">
+        <label for="codeName">Display Name</label>
+        <input id="codeName" class="input-field" type="text" maxlength="16" placeholder="Your display name" autocomplete="off">
+      </div>
+      <div class="input-group">
+        <label for="codeInput">Room Code</label>
+        <input id="codeInput" class="input-field" type="text" maxlength="6" placeholder="e.g. K7X2PM" autocomplete="off">
+      </div>
+      <button id="btnJoinCode2" class="btn btn--primary btn--full">Join Room</button>
+    </div>
+
+    <!-- Status / error banner -->
+    <div id="statusBanner" class="banner banner--hidden"></div>
+
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/room.js"></script>
+</body>
+</html>

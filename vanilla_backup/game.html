@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Game — Guess My Person</title>
+  <meta name="description" content="Play the ultimate multiplayer guessing game">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0f19'/><text x='50' y='68' font-size='60' font-family='monospace' font-weight='bold' fill='%2338bdf8' text-anchor='middle'>?</text></svg>">
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+  <!-- Sound Toggle -->
+  <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">🔊</button>
+
+  <!-- Status Banner -->
+  <div class="banner banner--hidden" id="statusBanner"></div>
+
+  <!-- Countdown Overlay -->
+  <div class="countdown-overlay hidden" id="countdownOverlay">
+    <div class="countdown-number" id="countdownNumber"></div>
+    <div class="countdown-text" id="countdownText"></div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="page-container--full">
+
+    <!-- TOP SECTION: Game Info Bar -->
+    <div class="flex-between game-info-bar" id="gameInfoBar">
+      <span class="title-sm" id="roundIndicator">Round 1/3</span>
+      <span class="badge badge--pink" id="hotSeatName">Player's turn</span>
+      <span class="title-sm text-accent-blue" id="timerSmall">3:00</span>
+    </div>
+
+    <!-- TIMER SECTION -->
+    <div class="flex-center timer-section" id="timerSection">
+      <div class="timer-container" id="timerContainer">
+        <svg class="timer-svg" viewBox="0 0 120 120">
+          <circle class="timer-circle-bg" cx="60" cy="60" r="54"/>
+          <circle class="timer-circle-fg" id="timerCircle" cx="60" cy="60" r="54"/>
+        </svg>
+        <div class="timer-text" id="timerText">3:00</div>
+      </div>
+    </div>
+
+    <!-- RULES REMINDER -->
+    <div class="card" id="rulesReminder">
+      <p class="text-sm text-muted text-center">Ask YES/NO/MAYBE questions only. No name-letter questions.</p>
+      <p class="text-xs text-muted text-center">Examples: Is this person alive? / Is this person an actor?</p>
+    </div>
+
+    <!-- QUESTION FEED -->
+    <div id="feedSection">
+      <div class="feed-container" id="questionFeed"></div>
+    </div>
+
+    <!-- PLAYER SCOREBOARD -->
+    <div class="section" id="scoreboardSection">
+      <div class="player-list" id="playerScoreboard"></div>
+    </div>
+
+  </div>
+
+  <!-- HOT SEAT ENTERING VIEW -->
+  <div class="modal-overlay hidden" id="hotSeatEnterView">
+    <div class="modal">
+      <h2 class="modal__title">You are in the hot seat!</h2>
+      <p class="text-body text-center text-muted">Think of a person. Enter their name below. Only you can see this.</p>
+      <div class="input-group">
+        <input class="input-field" id="personNameInput" type="text" placeholder="Enter person name" maxlength="60" autocomplete="off">
+      </div>
+      <button class="btn btn--pink btn--full" id="btnSubmitPerson">Lock It In</button>
+    </div>
+  </div>
+
+  <!-- HOT SEAT ANSWER BUTTONS -->
+  <div class="bottom-bar bottom-bar--answer hidden" id="answerBar">
+    <div class="text-sm text-center text-muted" id="answerBarStatus" style="font-weight: 500;">Waiting for questions...</div>
+    <div class="flex-center gap-sm" id="answerBarButtons" style="display: flex; width: 100%; justify-content: center; gap: 8px;">
+      <button class="btn btn--green" id="btnYes" style="flex: 1; min-width: 80px;">YES</button>
+      <button class="btn btn--danger" id="btnNo" style="flex: 1; min-width: 80px;">NO</button>
+      <button class="btn btn--ghost" id="btnMaybe" style="flex: 1; min-width: 120px;">MAYBE (-0.3)</button>
+    </div>
+  </div>
+
+  <!-- QUESTIONER BOTTOM BAR -->
+  <div class="bottom-bar bottom-bar--question hidden" id="questionBar">
+    <input class="input-field" id="questionInput" type="text" placeholder="Ask a yes/no question..." autocomplete="off">
+    <button class="btn btn--primary" id="btnSendQuestion">→</button>
+    <button class="btn btn--pink" id="btnGuess">GUESS</button>
+  </div>
+
+  <!-- GUESS MODAL -->
+  <div class="modal-overlay hidden" id="guessModal">
+    <div class="modal">
+      <h2 class="modal__title">Make Your Guess</h2>
+      <div class="guess-chances" id="guessChancesDisplay"></div>
+      <div class="input-group">
+        <input class="input-field" id="guessInput" type="text" placeholder="Who do you think it is?" maxlength="60" autocomplete="off">
+      </div>
+      <button class="btn btn--pink btn--full" id="btnSubmitGuess">Submit Guess</button>
+      <button class="btn btn--ghost btn--full" id="btnCancelGuess">Cancel</button>
+    </div>
+  </div>
+
+  <!-- HOT SEAT GUESS VERIFY MODAL -->
+  <div class="modal-overlay hidden" id="guessVerifyModal">
+    <div class="modal">
+      <h2 class="modal__title" id="guessVerifyTitle">Player guesses:</h2>
+      <p class="title-lg text-center" id="guessVerifyText"></p>
+      <button class="btn btn--green btn--full" id="btnCorrect">✓ CORRECT</button>
+      <button class="btn btn--danger btn--full" id="btnWrong">✗ WRONG</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

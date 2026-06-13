@@ -1,0 +1,12 @@
+# Home — Guess My Person
+
+
+# GUESS MY PERSON
+The ultimate multiplayer guessing game
+
+## Open Rooms
+No open rooms right now. [Create one?](http://localhost:3000/index.html)
+
+## Create Room
+
+## Join With Code

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Game Over — Guess My Person</title>
+  <meta name="description" content="Final results, winner announcement, and AI-generated roast">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0f19'/><text x='50' y='68' font-size='60' font-family='monospace' font-weight='bold' fill='%2338bdf8' text-anchor='middle'>?</text></svg>">
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+  <button class="sound-toggle" id="soundToggle">🔊</button>
+
+  <div class="banner banner--hidden" id="statusBanner"></div>
+
+  <div class="page-container">
+    <h1 class="title-xl text-center" id="gameOverTitle" data-text="Game Over!">Game Over!</h1>
+
+    <div class="section text-center" id="winnerSection">
+      <h2 class="title-sm text-accent-blue" id="winnerLabel">🏆 Winner 🏆</h2>
+      <p class="title-lg text-accent-pink" id="winnerName"></p>
+      <p class="text-body text-muted" id="winnerScore"></p>
+    </div>
+
+    <div class="section" id="finalLeaderboard">
+      <h2 class="title-sm">Final Standings</h2>
+      <div class="leaderboard" id="finalLeaderboardList"></div>
+    </div>
+
+    <div class="section" id="roastSection">
+      <h2 class="title-md text-accent-pink">The Roast 🔥</h2>
+      <p class="text-sm text-muted" id="roastTarget">Roasting: ...</p>
+      <div class="roast-card hidden" id="roastCard">
+        <div class="roast-card__label">AI GENERATED ROAST</div>
+        <div class="roast-card__text typewriter" id="roastText"></div>
+      </div>
+      <div class="flex-center" id="roastLoading">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+
+    <div class="section flex-col gap-md" id="actionButtons">
+      <button class="btn btn--pink btn--full btn--lg" id="btnPlayAgain">Play Again</button>
+      <button class="btn btn--ghost btn--full" id="btnLeave">Leave Room</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/roast.js"></script>
+</body>
+</html>

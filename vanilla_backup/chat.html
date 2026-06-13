@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Chat — Guess My Person</title>
+  <meta name="description" content="Between-round chat and leaderboard display">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0f19'/><text x='50' y='68' font-size='60' font-family='monospace' font-weight='bold' fill='%2338bdf8' text-anchor='middle'>?</text></svg>">
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+  <button class="sound-toggle" id="soundToggle">🔊</button>
+
+  <div class="banner banner--hidden" id="statusBanner"></div>
+
+  <div class="page-container">
+    <h1 class="title-lg text-center text-accent-pink" id="roundCompleteTitle">Round 1 Complete!</h1>
+
+    <div class="text-center text-sm text-muted" id="chatCountdown">Next round in: 30s</div>
+
+    <div class="section" id="leaderboardSection">
+      <h2 class="title-sm">Leaderboard</h2>
+      <div class="leaderboard" id="leaderboardList"></div>
+    </div>
+
+    <div class="section chat-section" id="chatSection">
+      <h2 class="title-sm">Chat</h2>
+      <p class="text-xs text-muted">Roast freely for 30 seconds</p>
+      <div class="chat-container" id="chatFeed"></div>
+    </div>
+  </div>
+
+  <div class="bottom-bar bottom-bar--question" id="chatBottomBar">
+    <input type="text" class="input-field" id="chatInput" placeholder="Type a message..." maxlength="200">
+    <button class="btn btn--primary" id="btnSendChat">→</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "rules": {
+    "rooms": {
+      "$roomCode": {
+        ".read": "auth != null && (data.child('meta/status').val() === 'lobby' || data.child('players').hasChild(auth.uid))",
+        ".write": "auth != null && data.val() == null",
+        
+        "meta": {
+          ".write": "auth != null && (data.val() == null || auth.uid === data.child('hostId').val())"
+        },
+        
+        "players": {
+          "$playerId": {
+            ".write": "auth != null && (auth.uid === $playerId || auth.uid === root.child('rooms/' + $roomCode + '/meta/hostId').val())",
+            
+            "name": {
+              ".validate": "newData.isString() && newData.val().length <= 16"
+            },
+            "score": {
+              ".validate": "newData.isNumber() && (data.val() == null || newData.val() >= data.val() || auth.uid === root.child('rooms/' + $roomCode + '/meta/hostId').val())"
+            }
+          }
+        },
+        
+        "hotSeat": {
+          ".write": "auth != null && (auth.uid === root.child('rooms/' + $roomCode + '/meta/hostId').val() || data.val() == null)"
+        },
+        
+        "questions": {
+          ".write": "auth != null && root.child('rooms/' + $roomCode + '/players/' + auth.uid).exists()"
+        },
+        
+        "guesses": {
+          ".write": "auth != null && root.child('rooms/' + $roomCode + '/players/' + auth.uid).exists()"
+        },
+        
+        "chat": {
+          ".write": "auth != null && root.child('rooms/' + $roomCode + '/players/' + auth.uid).exists()"
+        },
+        
+        "roast": {
+          ".write": "auth != null && (auth.uid === root.child('rooms/' + $roomCode + '/meta/hostId').val() || data.val() == null)"
+        }
+      }
+    }
+  }
+}

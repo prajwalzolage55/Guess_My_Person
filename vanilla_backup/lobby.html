@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Lobby — Guess My Person</title>
+  <meta name="description" content="Waiting room lobby for Guess My Person. Get ready and wait for the host to start the game!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0f19'/><text x='50' y='68' font-size='60' font-family='monospace' font-weight='bold' fill='%2338bdf8' text-anchor='middle'>?</text></svg>">
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+  <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound">🔊</button>
+
+  <div id="statusBanner" class="banner banner--hidden"></div>
+
+  <div class="page-container flex-col gap-lg">
+
+    <!-- Room code -->
+    <div class="flex-col flex-center gap-sm">
+      <div id="roomCodeDisplay" class="room-code" title="Click to copy room code">
+        <span class="room-code__label">ROOM CODE</span>
+        <span id="roomCodeText"></span>
+      </div>
+      <p id="roomName" class="text-sm text-muted text-center"></p>
+    </div>
+
+    <!-- Room settings summary -->
+    <div id="roomSettings" class="card flex-center gap-sm">
+      <span id="settingRounds" class="badge badge--blue"></span>
+      <span id="settingTimer" class="badge badge--blue"></span>
+      <span id="settingType" class="badge badge--pink"></span>
+    </div>
+
+    <!-- Player list -->
+    <div class="section flex-col gap-sm">
+      <div class="flex-between">
+        <h2 class="title-sm">Players</h2>
+        <span id="playerCount" class="text-sm text-muted"></span>
+      </div>
+      <div id="playerList" class="player-list"></div>
+    </div>
+
+    <!-- Host controls -->
+    <div id="hostControls" class="section flex-col gap-md hidden">
+      <button id="btnStartGame" class="btn btn--pink btn--full btn--lg" disabled>Start Game</button>
+    </div>
+
+    <!-- Non-host controls -->
+    <div id="playerControls" class="section flex-col gap-md hidden">
+      <button id="btnReady" class="btn btn--primary btn--full">Ready</button>
+    </div>
+
+    <!-- Leave -->
+    <button id="btnLeave" class="btn btn--ghost btn--full btn--sm">Leave Room</button>
+
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/lobby.js"></script>
+</body>
+</html>
